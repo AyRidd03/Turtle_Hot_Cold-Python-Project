@@ -7,6 +7,10 @@ import pygame.gfxdraw
 
 
 def main():
+    player_x = 250
+    player_y = 250
+    player_velx = 0
+    player_vely = 0
     pygame.init()
     screen = pygame.display.set_mode((500, 500))
     screen.fill((255, 0, 0))
@@ -30,8 +34,19 @@ def main():
             if event.type == pygame.QUIT:
                 break
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE or event.unicode == "q":
+                if event.key == pygame.K_LEFT:
+                    player_velx -= 0.5
+                elif event.key == pygame.K_RIGHT:
+                    player_velx += 0.5
+                elif event.key == pygame.K_UP:
+                    player_vely -= 0.5
+                elif event.key == pygame.K_DOWN:
+                    player_vely += 0.5
+                elif event.key == pygame.K_ESCAPE or event.unicode == "q":
                     break
+            player_x += player_velx
+            player_y += player_vely
+            pygame.draw.circle(screen, "green", (player_x, player_y), 10)
             pygame.display.flip()
     finally:
         pygame.quit()
