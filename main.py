@@ -23,8 +23,9 @@ def main():
         pygame.gfxdraw.aacircle(s, 250, 250, radius - a_radius, (0, 0, 0))
 
     screen.blit(s, (0, 0))
-
-    pygame.draw.circle(screen, "green", (50, 100), 10)
+    # Player Circle
+    pygame.draw.circle(screen, "green", (player_x, player_y), 10)
+    # Hidden Circle
     pygame.draw.circle(screen, "black", (50, 100), 10, 1)
 
     pygame.display.flip()
