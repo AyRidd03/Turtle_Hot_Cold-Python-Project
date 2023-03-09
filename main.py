@@ -11,7 +11,10 @@ def main():
     player_y = 250
     player_velx = 0
     player_vely = 0
+    player_accx = 0
+    player_accy = 0
     pygame.init()
+    pygame.key.set_repeat(1)  # Lets Keys be held inputs
     screen = pygame.display.set_mode((500, 500))
     screen.fill((255, 0, 0))
     s = pygame.Surface(screen.get_size(), pygame.SRCALPHA, 32)
@@ -24,30 +27,41 @@ def main():
 
     screen.blit(s, (0, 0))
     # Player Circle
-    pygame.draw.circle(screen, "green", (player_x, player_y), 10)
+    player_circle = pygame.draw.circle(screen, "green", (player_x, player_y), 10)
     # Hidden Circle
     pygame.draw.circle(screen, "black", (50, 100), 10, 1)
 
     pygame.display.flip()
     try:
         while True:
-            event = pygame.event.wait()
+            event = pygame.event.wait(1)
             if event.type == pygame.QUIT:
                 break
             if event.type == pygame.KEYDOWN:
+
                 if event.key == pygame.K_LEFT:
-                    player_velx -= 0.5
+                    player_accx -= 0.5
                 elif event.key == pygame.K_RIGHT:
-                    player_velx += 0.5
+                    player_accx += 0.5
                 elif event.key == pygame.K_UP:
-                    player_vely -= 0.5
+                    player_accy -= 0.5
                 elif event.key == pygame.K_DOWN:
-                    player_vely += 0.5
+                    player_accy += 0.5
                 elif event.key == pygame.K_ESCAPE or event.unicode == "q":
                     break
+            # Below changes and resets values to apply physics
+            player_velx += player_accx
+            player_vely += player_accy
+            player_accx -= (player_accx / 2)
+            player_accy -= (player_accy / 2)
             player_x += player_velx
             player_y += player_vely
-            pygame.draw.circle(screen, "green", (player_x, player_y), 10)
+            player_velx -= player_velx
+            player_vely -= player_vely
+
+            # Redraws the circle on the screen
+            player_circle = pygame.draw.circle(screen, "green", (player_x, player_y), 10)
+            pygame.display.update(player_circle)
             pygame.display.flip()
     finally:
         pygame.quit()
