@@ -28,6 +28,7 @@ def main():
     screen.blit(s, (0, 0))
 
     player_circle = pygame.draw.circle(screen, "green", (player_x, player_y), 10)
+
     # Hidden Circle
     hidden_circle = pygame.draw.circle(screen, "black", (50, 100), 10, 1)
 
@@ -71,7 +72,10 @@ def main():
             if(hidden_circle.colliderect(player_circle)):
                 hidden_circle = pygame.draw.circle(screen, "blue", (50, 100), 10, 1)
             player_circle.update(player_circle)
+            imp = pygame.image.load("Boulder.png").convert()
 
+            # Using blit to copy content from one surface to other
+            screen.blit(imp, (0, 0))
             pygame.display.flip()
     finally:
         pygame.quit()
