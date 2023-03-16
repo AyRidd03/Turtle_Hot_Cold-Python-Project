@@ -4,6 +4,7 @@
 
 import pygame
 import pygame.gfxdraw
+import math
 
 
 def main():
@@ -27,9 +28,11 @@ def main():
 
     screen.blit(s, (0, 0))
 
-    player_image = pygame.image.load("Boulder.png").convert_alpha()
-    player_image = pygame.transform.scale(player_image, (100, 75))
-    player_rect = player_image.get_rect(center=(player_x, player_y))
+    rock_img = pygame.image.load("The_Rock.png").convert_alpha()
+    rock_img = pygame.transform.scale(rock_img, (100, 75))
+    boulder_img = pygame.image.load("Boulder.png").convert_alpha()
+    boulder_img = pygame.transform.scale(boulder_img, (100, 75))
+    player_rect = boulder_img.get_rect(center=(player_x, player_y))
 
     # Hidden Circle
     hidden_circle = pygame.draw.circle(screen, "black", (50, 100), 10, 1)
@@ -67,7 +70,13 @@ def main():
             player_rect.center = (player_x, player_y)
             screen.fill((200, 100, 50))
             screen.blit(s, (0, 0))
-            screen.blit(player_image, player_rect)
+            distance = math.sqrt((player_x - 100) ** 2 + (player_y - 100) ** 2)
+
+            if distance < 50:
+                screen.blit(rock_img, player_rect)
+            else:
+                screen.blit(boulder_img, player_rect)
+
             if hidden_circle.colliderect(player_rect):
                 hidden_circle = pygame.draw.circle(screen, "blue", (50, 100), 10, 1)
             pygame.display.flip()
