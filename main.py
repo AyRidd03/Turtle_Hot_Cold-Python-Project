@@ -27,7 +27,8 @@ def main():
 
     screen.blit(s, (0, 0))
 
-    player_circle = pygame.draw.circle(screen, "green", (player_x, player_y), 10)
+    player_image = pygame.image.load("Boulder.png").convert_alpha()
+    player_rect = player_image.get_rect(center=(player_x, player_y))
 
     # Hidden Circle
     hidden_circle = pygame.draw.circle(screen, "black", (50, 100), 10, 1)
@@ -61,21 +62,13 @@ def main():
             player_velx -= player_velx
             player_vely -= player_vely
 
-            # Redraws the circle on the screen
-            player_circle.x = player_x
-            player_circle.y = player_y
-            print(f"X {player_circle.x}")
-            print(f"Y {player_circle.y}")
+            # Redraws the player's image on the screen
+            player_rect.center = (player_x, player_y)
             screen.fill((200, 100, 50))
             screen.blit(s, (0, 0))
-            player_circle = pygame.draw.circle(screen, "green", (player_x, player_y), 10)
-            if(hidden_circle.colliderect(player_circle)):
+            screen.blit(player_image, player_rect)
+            if hidden_circle.colliderect(player_rect):
                 hidden_circle = pygame.draw.circle(screen, "blue", (50, 100), 10, 1)
-            player_circle.update(player_circle)
-            imp = pygame.image.load("Boulder.png").convert()
-
-            # Using blit to copy content from one surface to other
-            screen.blit(imp, (0, 0))
             pygame.display.flip()
     finally:
         pygame.quit()
