@@ -28,6 +28,7 @@ def main():
     screen.blit(s, (0, 0))
 
     player_image = pygame.image.load("Boulder.png").convert_alpha()
+    player_image = pygame.transform.scale(player_image, (100, 75))
     player_rect = player_image.get_rect(center=(player_x, player_y))
 
     # Hidden Circle
