@@ -1,5 +1,6 @@
 import pygame
 import pygame.gfxdraw
+import time
 
 
 def set_cursor(s):  # Sorry Debbie
@@ -84,5 +85,15 @@ def menu_choices(screen, s):
     #         if event.type == pygame.mo
 
 # def endgame(screen, s):
-#
-#
+    power = pygame.movie('THE_POWER.gif')
+    x, y = screen.get_size()
+    screen.blit(pygame.transform.scale(power.get_surface(), (x, y)), (0, 0))
+    pygame.display.flip()
+
+    duration = time.time()
+    while time.time() - duration < 5:
+        power.play()
+        pygame.time.wait(10)
+        screen.blit(pygame.transform.scale(power.get_surface(), (x, y)), (0,0))
+        pygame.display.flip()
+
