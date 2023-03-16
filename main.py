@@ -4,7 +4,8 @@
 
 import pygame
 import pygame.gfxdraw
-import math
+import player as play
+import menu
 
 
 def main():
