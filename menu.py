@@ -2,7 +2,7 @@ import pygame
 import pygame.gfxdraw
 
 
-def set_cursor():  # Sorry Debbie
+def set_cursor(s):  # Sorry Debbie
     THE_DRIVE = (  # sized 48x72
         "  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⡟⠀⠒⠀⠀⠀⠈⠔⣻⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀     ",
         "⠀⠀  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡾⣾⡏⠀⠀⠠⠀⠀⠀⢠⡼⣿⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀       ",
@@ -52,7 +52,26 @@ def set_cursor():  # Sorry Debbie
         "                                                                        ",
         "                                                                        ",
         "                                                                        ")
-    pygame.cursors.compile(THE_DRIVE, black='⢸', white='⣿', xor='o')
+
+    happy_face = (
+        "        ",
+        "  0  0  ",
+        "        ",
+        " 1    1 ",
+        "  1111  ",
+        "        ",
+        "        ",
+        "        "
+        )
+    '''
+    the_drive = pygame.cursors.compile(THE_DRIVE,
+                               black='⢸',
+                               white= '⣿', xor='o')
+    pygame.mouse.set_cursor(the_drive)
+    '''
+    happy = pygame.cursors.compile(happy_face, black = '0', white = '1', xor = 'o')
+    pygame.mouse.set_cursor(happy_face)
+
 def menu_choices(screen, s):
     screen.fill((200, 100, 50))
     screen.blit(s, (0, 0))

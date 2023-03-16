@@ -31,7 +31,7 @@ def main():
     try:
 
         while True:
-            menu.set_cursor()
+            # menu.set_cursor(s)
             # menu.menu_choices(screen, s)
             event = pygame.event.wait(1)
             if event.type == pygame.QUIT:
