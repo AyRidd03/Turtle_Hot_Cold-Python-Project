@@ -70,21 +70,35 @@ def set_cursor(s):  # Sorry Debbie
                                white= '⣿', xor='o')
     pygame.mouse.set_cursor(the_drive)
     '''
-    happy = pygame.cursors.compile(happy_face, black = '0', white = '1', xor = 'o')
-    pygame.mouse.set_cursor(happy_face)
+    happy = pygame.cursors.compile(happy_face, black='0', white='1', xor='o')
+    pygame.mouse.set_cursor(happy)
 
-def menu_choices(screen, s):
-    screen.fill((200, 100, 50))
-    screen.blit(s, (0, 0))
-    start = pygame.draw.rect(screen, "yellow", 100, 50, 250,250)
-    # try:
-    #     while True:
-    #         event = pygame.event.wait(1)
-    #         if event.type == pygame.QUIT:
-    #             break
-    #         if event.type == pygame.mo
 
-# def endgame(screen, s):
+def menu_choices(screen, s, event):
+    # These are the values for the start button, which the rest will adjust accordingly
+    width = 100
+    height = 50
+    x = 200
+    y = 300
+
+    while True:
+        start_button = pygame.draw.rect(screen, "yellow", (x, y, width, height))
+        exit_button = pygame.draw.rect(screen, "white", (x, y + height * 2, width, height))  # Place it just under start
+        if event.type == pygame.QUIT:
+            break
+        if start_button.collidepoint(pygame.mouse.get_pos()):
+            start_button = pygame.draw.rect(s, "green", (x, y, width, height))
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                break
+        if exit_button.collidepoint(pygame.mouse.get_pos()):
+            exit_button = pygame.draw.rect(s, "green", (x, y, width, height))
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                break
+        pygame.display.flip()
+
+
+
+def endgame(screen, s):
     power = pygame.movie('THE_POWER.gif')
     x, y = screen.get_size()
     screen.blit(pygame.transform.scale(power.get_surface(), (x, y)), (0, 0))

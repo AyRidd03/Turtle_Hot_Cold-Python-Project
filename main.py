@@ -32,8 +32,8 @@ def main():
 
         while True:
             # menu.set_cursor(s)
-            # menu.menu_choices(screen, s)
             event = pygame.event.wait(1)
+            menu.menu_choices(screen, s, event)  # menu before the game starts
             if event.type == pygame.QUIT:
                 break
 
@@ -53,6 +53,7 @@ def main():
 
             if hidden_circle.colliderect(p.get_player_circle()):
                 hidden_circle = pygame.draw.circle(screen, "blue", (50, 100), 10, 1)
+                # menu.endgame(screen, s)
             pygame.display.flip()
             p.draw_player_circle(hidden_circle, screen, s)
 
