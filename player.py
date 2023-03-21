@@ -48,5 +48,13 @@ class player_circle:
     def set_player_accy(self, player_accy):
         self.player_accy += player_accy
 
+    def set_player_width(self, player_width):
+        self.player_width = player_width
+
+
+    def set_player_height(self, player_height):
+        self.player_height = player_height
+
+
     def get_player_circle(self):
         return self.player_rect
