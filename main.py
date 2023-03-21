@@ -10,7 +10,7 @@ import menu
 def main():
     pygame.init()
     pygame.key.set_repeat(10)  # Lets Keys be held inputs
-    screen = pygame.display.set_mode((500, 500))
+    screen = pygame.display.set_mode((1900, 1000))
     screen.fill((255, 0, 0))
     s = pygame.Surface(screen.get_size(), pygame.SRCALPHA, 32)
     pygame.draw.line(s, (0, 0, 0), (250, 250), (250 + 200, 250))

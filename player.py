@@ -67,3 +67,9 @@ class player_circle:
 
     def get_player_circle(self):
         return self.player_rect
+
+    def get_player_distance(self, h_circle):
+        distance = math.sqrt((self.player_x - h_circle.x) ** 2 + (self.player_y - h_circle.y) ** 2)
+        return distance
+    def get_old_distance(self):
+        return self.old_distance

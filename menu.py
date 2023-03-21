@@ -78,16 +78,34 @@ def set_cursor(s):  # Sorry Debbie
 
 def menu_choices(screen, s, event):
     pygame.display.flip()
-    screen.fill((100, 100, 50))
+    screen.fill((131, 75, 196))
 
     # These are the values for the start button, which the rest will adjust accordingly
-    width = 200
-    height = 50
-    x = 150
-    y = 150
+    width = screen.get_width()/2
+    height = screen.get_height()/10
+    x = screen.get_width()/2 - width/2
+    y = screen.get_height()/4 + height/2
+    font = pygame.font.Font(None, 64)
+
+    text = font.render("Rock Finds a Circle", True, (10, 10, 10))
+    textpos = text.get_rect(centerx=screen.get_width() / 2, y=10)
+    screen.blit(text, textpos)
+
+    # Start Button (Easy Mode)
+    text = font.render("Easy", True, (10, 10, 10))
     start_button = pygame.draw.rect(screen, "white", (x, y, width, height))
+    textpos = text.get_rect(centerx=screen.get_width() / 2, y=y)
+    screen.blit(text, textpos)
+
+    text = font.render("Medium", True, (10, 10, 10))
     medium_button = pygame.draw.rect(screen, "yellow", (x, y + height * 2, width, height))  # Place it just under start
+    textpos = text.get_rect(centerx=screen.get_width() / 2, y=y + height * 2)
+    screen.blit(text, textpos)
+
+    text = font.render("Hard", True, (10, 10, 10))
     hard_button = pygame.draw.rect(screen, "red", (x, y + height * 4, width, height))  # Place it just under med
+    textpos = text.get_rect(centerx=screen.get_width() / 2, y=y + height * 4)
+    screen.blit(text, textpos)
     # exit_button = pygame.draw.rect(screen, "white", (x, y + height * 6, width, height))  # Place it just under hard
 
     # Start Button Function
@@ -122,8 +140,6 @@ def menu_choices(screen, s, event):
             print("no button pressed")
 
 
-
-
 def play_game(screen, s, color, p, hidden_circle):
     while True:
         event = pygame.event.wait(1)
@@ -142,11 +158,25 @@ def play_game(screen, s, color, p, hidden_circle):
         if event.type == pygame.QUIT:
             break
         p.move_player_circle()
-
+        font = pygame.font.Font(None, 64)
+        font_hue = p.get_player_distance(hidden_circle) * 255 / screen.get_width()
+        font_color = (255 - font_hue, 0, font_hue)
+        if p.get_player_distance(hidden_circle) > p.get_old_distance():
+            text = font.render("Colder", True, (font_color))
+            textpos = text.get_rect(centerx=screen.get_width() / 8, y=10)
+            if p.get_player_distance(hidden_circle) > screen.get_width()/2:
+                text = font.render("Ice Cold", True, (font_color))
+            screen.blit(text, textpos)
+        elif p.get_player_distance(hidden_circle) < p.get_old_distance():
+            text = font.render("Warmer", True, (font_color))
+            textpos = text.get_rect(centerx=screen.get_width() / 8, y=10)
+            if p.get_player_distance(hidden_circle) < screen.get_width()/8:
+                text = font.render("Very Hot", True, (font_color))
+            screen.blit(text, textpos)
         if hidden_circle.colliderect(p.get_player_circle()):
             hidden_circle = pygame.draw.circle(screen, "blue", (hidden_circle.x, hidden_circle.y), 10, 1)
             pygame.display.flip()
-            endgame(screen, s)
+            endgame(screen)
             break
         pygame.display.flip()
         screen.fill(color)
@@ -157,59 +187,59 @@ def easy_mode(screen, s):
     print("easy")  # Placeholder
 
     # Player Circle
-    p = play.player_circle(250, 250)
-    p.set_player_width(200)
-    p.set_player_height(175)
+    p = play.player_circle(screen.get_width()/2, screen.get_height()/2)
+    p.set_player_width(screen.get_width()/4)
+    p.set_player_height(screen.get_height()/4)
     # Hidden Circle
-    x = random.random() * 250
-    y = random.random() * 250
+    x = random.random() * screen.get_width()
+    y = random.random() * screen.get_height()
     hidden_circle = pygame.draw.circle(screen, "black", (x, y), 10, 1)
     while hidden_circle.colliderect(p.get_player_circle()):
-        x = random.random() * 250
-        y = random.random() * 250
+        x = random.random() * screen.get_width()
+        y = random.random() * screen.get_height()
         hidden_circle = pygame.draw.circle(screen, "black", (x, y), 10, 1)
-    color = "green"
+    color = (125,181,124)
     play_game(screen, s, color, p, hidden_circle)
 
 
 def med_mode(screen, s):
     print("mid")  # Placeholder
-    p = play.player_circle(250, 250)
-    p.set_player_width(100)
-    p.set_player_height(87.5)
+    p = play.player_circle(screen.get_width() / 2, screen.get_height() / 2)
+    p.set_player_width(screen.get_width() / 8)
+    p.set_player_height(screen.get_height() / 8)
 
     # Hidden Circle
-    x = random.random() * 250
-    y = random.random() * 250
+    x = random.random() * screen.get_width()
+    y = random.random() * screen.get_height()
     hidden_circle = pygame.draw.circle(screen, "black", (x, y), 10, 1)
     while hidden_circle.colliderect(p.get_player_circle()):
-        x = random.random() * 250
-        y = random.random() * 250
+        x = random.random() * screen.get_width()
+        y = random.random() * screen.get_height()
         hidden_circle = pygame.draw.circle(screen, "black", (x, y), 10, 1)
 
-    color = "yellow"
+    color = (235, 226, 119)
     play_game(screen, s, color, p, hidden_circle)
 
 
 def hard_mode(screen, s):
     print("hard")  # Placeholder
-    p = play.player_circle(250, 250)
-    p.set_player_width(50)
-    p.set_player_height(43.75)
+    p = play.player_circle(screen.get_width() / 2, screen.get_height() / 2)
+    p.set_player_width(screen.get_width() / 16)
+    p.set_player_height(screen.get_height() / 16)
 
     # Hidden Circle
-    x = random.random() * 250
-    y = random.random() * 250
+    x = random.random() * screen.get_width()
+    y = random.random() * screen.get_height()
     hidden_circle = pygame.draw.circle(screen, "black", (x, y), 10, 1)
     while hidden_circle.colliderect(p.get_player_circle()):
-        x = random.random() * 250
-        y = random.random() * 250
+        x = random.random() * screen.get_width()
+        y = random.random() * screen.get_height()
         hidden_circle = pygame.draw.circle(screen, "black", (x, y), 10, 1)
-    color = "red"
+    color = (235, 137, 119)
     play_game(screen, s, color, p, hidden_circle)
 
 
-def endgame(screen, s):
+def endgame(screen):
 
     # power = pygame.movie('THE_POWER.gif')
     # x, y = screen.get_size()
@@ -223,5 +253,20 @@ def endgame(screen, s):
     #     screen.blit(pygame.transform.scale(power.get_surface(), (x, y)), (0,0))
     #     pygame.display.flip()
 
-    print("You did it!")
-    pygame.time.delay(5000)
+        while True:
+            font = pygame.font.Font(None, 64)
+            text = font.render("You Did It!", True, (10, 10, 10))
+            textpos = text.get_rect(centerx=screen.get_width() / 2, y=200)
+            screen.blit(text, textpos)
+
+            font = pygame.font.Font(None, 32)
+            text = font.render("Click the Screen to Go Back to Menu", True, (10, 10, 10))
+            textpos = text.get_rect(centerx=screen.get_width() / 2, y=250)
+            screen.blit(text, textpos)
+            pygame.display.flip()
+            event = pygame.event.wait(1)
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                break
+            if event.type == pygame.QUIT:
+                break
+
