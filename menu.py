@@ -76,26 +76,37 @@ def set_cursor(s):  # Sorry Debbie
 
 def menu_choices(screen, s, event):
     # These are the values for the start button, which the rest will adjust accordingly
-    width = 100
+    width = 200
     height = 50
-    x = 200
-    y = 300
-
-    while True:
-        start_button = pygame.draw.rect(screen, "yellow", (x, y, width, height))
-        exit_button = pygame.draw.rect(screen, "white", (x, y + height * 2, width, height))  # Place it just under start
-        if event.type == pygame.QUIT:
-            break
-        if start_button.collidepoint(pygame.mouse.get_pos()):
-            start_button = pygame.draw.rect(s, "green", (x, y, width, height))
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                break
-        if exit_button.collidepoint(pygame.mouse.get_pos()):
-            exit_button = pygame.draw.rect(s, "green", (x, y, width, height))
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                break
-        pygame.display.flip()
-
+    x = 150
+    y = 150
+    start_button = pygame.draw.rect(screen, "yellow", (x, y, width, height))
+    medium_button = pygame.draw.rect(screen, "white", (x, y + height * 2, width, height))  # Place it just under start
+    hard_button = pygame.draw.rect(screen, "white", (x, y + height * 4, width, height))  # Place it just under med
+    exit_button = pygame.draw.rect(screen, "white", (x, y + height * 6, width, height))  # Place it just under hard
+    # Start Button Function
+    if start_button.collidepoint(pygame.mouse.get_pos()):
+        start_button = pygame.draw.rect(screen, "green", (x, y, width, height))
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            print("start_button pressed")
+    # Medium Difficulty Function
+    elif medium_button.collidepoint(pygame.mouse.get_pos()):
+        medium_button = pygame.draw.rect(screen, "green", (x, y + height * 2, width, height))
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            print("medium_button pressed")
+    # Hard Difficulty Function
+    elif hard_button.collidepoint(pygame.mouse.get_pos()):
+        hard_button = pygame.draw.rect(screen, "green", (x, y + height * 4, width, height))
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            print("start_button pressed")
+    elif exit_button.collidepoint(pygame.mouse.get_pos()):
+        exit_button = pygame.draw.rect(screen, "green", (x, y + height * 6, width, height))
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            print("exit_button pressed")
+    else:
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            print("no button pressed")
+    pygame.display.flip()
 
 
 def endgame(screen, s):
