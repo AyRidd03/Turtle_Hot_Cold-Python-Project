@@ -1,7 +1,6 @@
 import random
 import pygame
 import pygame.gfxdraw
-import time
 import player as play
 
 '''
@@ -78,15 +77,18 @@ def set_cursor(s):  # Sorry Debbie
 
 
 def menu_choices(screen, s, event):
+    pygame.display.flip()
+    screen.fill((100, 100, 50))
+
     # These are the values for the start button, which the rest will adjust accordingly
     width = 200
     height = 50
     x = 150
     y = 150
-    start_button = pygame.draw.rect(screen, "yellow", (x, y, width, height))
-    medium_button = pygame.draw.rect(screen, "white", (x, y + height * 2, width, height))  # Place it just under start
-    hard_button = pygame.draw.rect(screen, "white", (x, y + height * 4, width, height))  # Place it just under med
-    exit_button = pygame.draw.rect(screen, "white", (x, y + height * 6, width, height))  # Place it just under hard
+    start_button = pygame.draw.rect(screen, "white", (x, y, width, height))
+    medium_button = pygame.draw.rect(screen, "yellow", (x, y + height * 2, width, height))  # Place it just under start
+    hard_button = pygame.draw.rect(screen, "red", (x, y + height * 4, width, height))  # Place it just under med
+    # exit_button = pygame.draw.rect(screen, "white", (x, y + height * 6, width, height))  # Place it just under hard
 
     # Start Button Function
     if start_button.collidepoint(pygame.mouse.get_pos()):
@@ -110,17 +112,19 @@ def menu_choices(screen, s, event):
             hard_mode(screen, s)
 
     # Exit Button Function
-    elif exit_button.collidepoint(pygame.mouse.get_pos()):
-        exit_button = pygame.draw.rect(screen, "green", (x, y + height * 6, width, height))
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            print("exit_button pressed")
+    # elif exit_button.collidepoint(pygame.mouse.get_pos()):
+    #    exit_button = pygame.draw.rect(screen, "green", (x, y + height * 6, width, height))
+    #    if event.type == pygame.MOUSEBUTTONDOWN:
+    #        print("exit_button pressed")
+
     else:
         if event.type == pygame.MOUSEBUTTONDOWN:
             print("no button pressed")
-    pygame.display.flip()
 
 
-def play_game(screen, s, p, hidden_circle):
+
+
+def play_game(screen, s, color, p, hidden_circle):
     while True:
         event = pygame.event.wait(1)
         if event.type == pygame.KEYDOWN:
@@ -145,6 +149,7 @@ def play_game(screen, s, p, hidden_circle):
             endgame(screen, s)
             break
         pygame.display.flip()
+        screen.fill(color)
         p.draw_player_circle(hidden_circle, screen, s)
 
 
@@ -159,11 +164,12 @@ def easy_mode(screen, s):
     x = random.random() * 250
     y = random.random() * 250
     hidden_circle = pygame.draw.circle(screen, "black", (x, y), 10, 1)
-    while(hidden_circle.colliderect(p.get_player_circle())):
+    while hidden_circle.colliderect(p.get_player_circle()):
         x = random.random() * 250
         y = random.random() * 250
         hidden_circle = pygame.draw.circle(screen, "black", (x, y), 10, 1)
-    play_game(screen, s, p, hidden_circle)
+    color = "green"
+    play_game(screen, s, color, p, hidden_circle)
 
 
 def med_mode(screen, s):
@@ -176,11 +182,13 @@ def med_mode(screen, s):
     x = random.random() * 250
     y = random.random() * 250
     hidden_circle = pygame.draw.circle(screen, "black", (x, y), 10, 1)
-    while (hidden_circle.colliderect(p.get_player_circle())):
+    while hidden_circle.colliderect(p.get_player_circle()):
         x = random.random() * 250
         y = random.random() * 250
         hidden_circle = pygame.draw.circle(screen, "black", (x, y), 10, 1)
-    play_game(screen, s, p, hidden_circle)
+
+    color = "yellow"
+    play_game(screen, s, color, p, hidden_circle)
 
 
 def hard_mode(screen, s):
@@ -193,27 +201,27 @@ def hard_mode(screen, s):
     x = random.random() * 250
     y = random.random() * 250
     hidden_circle = pygame.draw.circle(screen, "black", (x, y), 10, 1)
-    while (hidden_circle.colliderect(p.get_player_circle())):
+    while hidden_circle.colliderect(p.get_player_circle()):
         x = random.random() * 250
         y = random.random() * 250
         hidden_circle = pygame.draw.circle(screen, "black", (x, y), 10, 1)
-    play_game(screen, s, p, hidden_circle)
+    color = "red"
+    play_game(screen, s, color, p, hidden_circle)
 
 
 def endgame(screen, s):
-    '''
-    power = pygame.movie('THE_POWER.gif')
-    x, y = screen.get_size()
-    screen.blit(pygame.transform.scale(power.get_surface(), (x, y)), (0, 0))
-    pygame.display.flip()
 
-    duration = time.time()
-    while time.time() - duration < 5:
-        power.play()
-        pygame.time.wait(10)
-        screen.blit(pygame.transform.scale(power.get_surface(), (x, y)), (0,0))
-        pygame.display.flip()
-    '''
+    # power = pygame.movie('THE_POWER.gif')
+    # x, y = screen.get_size()
+    # screen.blit(pygame.transform.scale(power.get_surface(), (x, y)), (0, 0))
+    # pygame.display.flip()
+
+    # duration = time.time()
+    # while time.time() - duration < 5:
+    #     power.play()
+    #     pygame.time.wait(10)
+    #     screen.blit(pygame.transform.scale(power.get_surface(), (x, y)), (0,0))
+    #     pygame.display.flip()
+
     print("You did it!")
     pygame.time.delay(5000)
-

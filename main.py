@@ -22,8 +22,6 @@ def main():
 
     screen.blit(s, (0, 0))
 
-
-
     pygame.display.flip()
     try:
 

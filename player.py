@@ -32,7 +32,6 @@ class player_circle:
 
     def draw_player_circle(self, h_circle, screen, s):
         # Redraws the player's image on the screen
-        screen.fill((200, 100, 50))
         screen.blit(s, (0, 0))
         self.player_rect.center = (self.player_x, self.player_y)
         distance = math.sqrt((self.player_x - h_circle.x) ** 2 + (self.player_y - h_circle.y) ** 2)
@@ -50,10 +49,20 @@ class player_circle:
 
     def set_player_width(self, player_width):
         self.player_width = player_width
+        self.rock_img = pygame.image.load("The_Rock.png").convert_alpha()
+        self.rock_img = pygame.transform.scale(self.rock_img, (self.player_width, self.player_height))
+        self.boulder_img = pygame.image.load("Boulder.png").convert_alpha()
+        self.boulder_img = pygame.transform.scale(self.boulder_img, (self.player_width, self.player_height))
+        self.player_rect = self.boulder_img.get_rect(center=(self.player_x, self.player_y))
 
 
     def set_player_height(self, player_height):
         self.player_height = player_height
+        self.rock_img = pygame.image.load("The_Rock.png").convert_alpha()
+        self.rock_img = pygame.transform.scale(self.rock_img, (self.player_width, self.player_height))
+        self.boulder_img = pygame.image.load("Boulder.png").convert_alpha()
+        self.boulder_img = pygame.transform.scale(self.boulder_img, (self.player_width, self.player_height))
+        self.player_rect = self.boulder_img.get_rect(center=(self.player_x, self.player_y))
 
 
     def get_player_circle(self):
