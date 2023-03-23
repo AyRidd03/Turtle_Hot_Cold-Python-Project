@@ -19,16 +19,30 @@ class player_circle:
         self.boulder_img = pygame.transform.scale(self.boulder_img, (self.player_width, self.player_height))
         self.player_rect = self.boulder_img.get_rect(center=(self.player_x, self.player_y))
         self.old_distance = 0
+        self.travel_distance = 0
 
-    def move_player_circle(self):
+    def move_player_circle(self, screen):
+        old_position = (self.player_x, self.player_y)
         self.player_velx += self.player_accx
         self.player_vely += self.player_accy
+        if int(self.player_x) in range(0, screen.get_width()) and int(self.player_y) in range(0, screen.get_height()):
+            self.player_x += self.player_velx
+            self.player_y += self.player_vely
+        else:
+            self.player_x -= self.player_velx * 2
+            self.player_y -= self.player_vely * 2
+            self.player_velx = 0
+            self.player_vely = 0
+            self.player_accx = 0
+            self.player_accy = 0
         self.player_accx -= (self.player_accx / 8)
         self.player_accy -= (self.player_accy / 8)
-        self.player_x += self.player_velx
-        self.player_y += self.player_vely
         self.player_velx -= self.player_velx
         self.player_vely -= self.player_vely
+        new_position = (self.player_x, self.player_y)
+        self.add_travel(new_position, old_position)
+
+
 
     def draw_player_circle(self, h_circle, screen, s):
         # Redraws the player's image on the screen
@@ -64,12 +78,20 @@ class player_circle:
         self.boulder_img = pygame.transform.scale(self.boulder_img, (self.player_width, self.player_height))
         self.player_rect = self.boulder_img.get_rect(center=(self.player_x, self.player_y))
 
-
     def get_player_circle(self):
         return self.player_rect
 
     def get_player_distance(self, h_circle):
         distance = math.sqrt((self.player_x - h_circle.x) ** 2 + (self.player_y - h_circle.y) ** 2)
         return distance
+
     def get_old_distance(self):
         return self.old_distance
+
+    def add_travel(self, new, old):
+        old_x, old_y = old
+        new_x, new_y = new
+        self.travel_distance += math.sqrt((old_x - new_x) ** 2 + (old_y - new_y) ** 2)
+
+    def get_travel_distance(self):
+        return self.travel_distance

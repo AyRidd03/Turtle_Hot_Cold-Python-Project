@@ -13,22 +13,15 @@ def main():
     screen = pygame.display.set_mode((1900, 1000))
     screen.fill((255, 0, 0))
     s = pygame.Surface(screen.get_size(), pygame.SRCALPHA, 32)
-    pygame.draw.line(s, (0, 0, 0), (250, 250), (250 + 200, 250))
-
-    width = 1
-    for a_radius in range(width):
-        radius = 200
-        pygame.gfxdraw.aacircle(s, 250, 250, radius - a_radius, (0, 0, 0))
-
-    screen.blit(s, (0, 0))
-
     pygame.display.flip()
     try:
-
+        easy_record = menu.Record()
+        med_record = menu.Record()
+        hard_record = menu.Record()
         while True:
             # menu.set_cursor(s)
             event = pygame.event.wait(1)
-            menu.menu_choices(screen, s, event)  # menu before the game starts
+            menu.menu_choices(screen, s, event, easy_record, med_record, hard_record)  # menu before the game starts
             if event.type == pygame.QUIT:
                 break
 
