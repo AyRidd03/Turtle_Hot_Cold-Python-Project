@@ -4,7 +4,6 @@ import pygame.gfxdraw
 import player as play
 
 
-
 def set_background(screen):  # Sorry Debbie
     THE_DRIVE = (
         "What's the key to success? The key is, there is no key.",
@@ -70,6 +69,7 @@ def menu_choices(screen, s, event, easy, med, hard):
     pygame.display.flip()
     screen.fill((131, 75, 196))
     set_background(screen)
+
     # These are the values for the start button, which the rest will adjust accordingly
     width = screen.get_width()/2
     height = screen.get_height()/10
@@ -96,7 +96,6 @@ def menu_choices(screen, s, event, easy, med, hard):
     hard_button = pygame.draw.rect(screen, "red", (x, y + height * 4, width, height))  # Place it just under med
     textpos = text.get_rect(centerx=screen.get_width() / 2, y=y + height * 4)
     screen.blit(text, textpos)
-    # exit_button = pygame.draw.rect(screen, "white", (x, y + height * 6, width, height))  # Place it just under hard
 
     # Start Button Function
     if start_button.collidepoint(pygame.mouse.get_pos()):
@@ -118,13 +117,6 @@ def menu_choices(screen, s, event, easy, med, hard):
         if event.type == pygame.MOUSEBUTTONDOWN:
             print("hard_button pressed")
             hard_mode(screen, s, hard)
-
-    # Exit Button Function
-    # elif exit_button.collidepoint(pygame.mouse.get_pos()):
-    #    exit_button = pygame.draw.rect(screen, "green", (x, y + height * 6, width, height))
-    #    if event.type == pygame.MOUSEBUTTONDOWN:
-    #        print("exit_button pressed")
-
     else:
         if event.type == pygame.MOUSEBUTTONDOWN:
             print("no button pressed")
@@ -187,7 +179,7 @@ def play_game(screen, s, color, p, hidden_circle, record):
 def easy_mode(screen, s, record):
     print("easy")  # Placeholder
     # Player Circle
-    p = play.player_circle(screen.get_width()/2, screen.get_height()/2)
+    p = play.PlayerCircle(screen.get_width() / 2, screen.get_height() / 2)
     p.set_player_width(screen.get_width()/4)
     p.set_player_height(screen.get_height()/4)
     # Hidden Circle
@@ -198,13 +190,13 @@ def easy_mode(screen, s, record):
         x = random.random() * screen.get_width()
         y = random.random() * screen.get_height()
         hidden_circle = pygame.draw.circle(screen, "black", (x, y), 10, 1)
-    color = (125,181,124)
+    color = (125, 181, 124)
     play_game(screen, s, color, p, hidden_circle, record)
 
 
 def med_mode(screen, s, record):
     print("mid")  # Placeholder
-    p = play.player_circle(screen.get_width() / 2, screen.get_height() / 2)
+    p = play.PlayerCircle(screen.get_width() / 2, screen.get_height() / 2)
     p.set_player_width(screen.get_width() / 8)
     p.set_player_height(screen.get_height() / 8)
 
@@ -223,7 +215,7 @@ def med_mode(screen, s, record):
 
 def hard_mode(screen, s, record):
     print("hard")  # Placeholder
-    p = play.player_circle(screen.get_width() / 2, screen.get_height() / 2)
+    p = play.PlayerCircle(screen.get_width() / 2, screen.get_height() / 2)
     p.set_player_width(screen.get_width() / 16)
     p.set_player_height(screen.get_height() / 16)
 
@@ -240,18 +232,6 @@ def hard_mode(screen, s, record):
 
 
 def endgame(screen, time, record, player):
-
-    # power = pygame.movie('THE_POWER.gif')
-    # x, y = screen.get_size()
-    # screen.blit(pygame.transform.scale(power.get_surface(), (x, y)), (0, 0))
-    # pygame.display.flip()
-
-    # duration = time.time()
-    # while time.time() - duration < 5:
-    #     power.play()
-    #     pygame.time.wait(10)
-    #     screen.blit(pygame.transform.scale(power.get_surface(), (x, y)), (0,0))
-    #     pygame.display.flip()
 
     if time < record.get_record():
         record.set_record(time)

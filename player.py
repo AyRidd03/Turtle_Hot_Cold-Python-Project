@@ -3,7 +3,7 @@ import pygame.gfxdraw
 import math
 
 
-class player_circle:
+class PlayerCircle:
     def __init__(self, player_x, player_y):
         self.player_x = player_x
         self.player_y = player_y
@@ -42,8 +42,6 @@ class player_circle:
         new_position = (self.player_x, self.player_y)
         self.add_travel(new_position, old_position)
 
-
-
     def draw_player_circle(self, h_circle, screen, s):
         # Redraws the player's image on the screen
         screen.blit(s, (0, 0))
@@ -68,7 +66,6 @@ class player_circle:
         self.boulder_img = pygame.image.load("Boulder.png").convert_alpha()
         self.boulder_img = pygame.transform.scale(self.boulder_img, (self.player_width, self.player_height))
         self.player_rect = self.boulder_img.get_rect(center=(self.player_x, self.player_y))
-
 
     def set_player_height(self, player_height):
         self.player_height = player_height
